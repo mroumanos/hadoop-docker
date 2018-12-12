@@ -1,0 +1,90 @@
+version: '3'
+
+services:
+
+  base:
+    image: base
+    build:
+      context: ./base
+      args:
+        BASE_OS: centos
+        HADOOP_VER: 2.9.2
+        JAVA_VER: 7
+
+  daemon:
+    image: daemon
+    build:
+      context: ./daemon
+
+  namenode:
+    image: daemon
+    hostname: namenode
+    command: ./start.sh hadoop namenode
+    ports:
+      - 50070:50070
+    volumes:
+      - ./namenode/format.sh:/tmp/format.sh
+      - ./namenode/logs:/usr/local/hadoop/hadoop/logs
+      - ./namenode/data:/usr/local/hadoop/data/nn
+    networks:
+      - hadoop
+
+  datanode:
+    image: daemon
+    hostname: datanode
+    command: ./start.sh hadoop datanode
+    ports:
+      - 50075:50075
+    volumes:
+      - ./datanode/logs:/usr/local/hadoop/hadoop/logs
+      - ./datanode/data:/usr/local/hadoop/data/dn
+    networks:
+      - hadoop
+
+  secondarynamenode:
+    image: daemon
+    hostname: secondarynamenode
+    command: ./start.sh hadoop secondarynamenode
+    ports:
+      - 50090:50090
+    volumes:
+      - ./secondarynamenode/logs:/usr/local/hadoop/hadoop/logs
+      - ./secondarynamenode/data:/usr/local/hadoop/data/snn
+    networks:
+      - hadoop
+
+  nodemanager:
+    image: daemon
+    hostname: nodemanager
+    command: ./start.sh yarn nodemanager
+    ports:
+      - 8042:8042
+    volumes:
+      - ./nodemanager/logs:/usr/local/hadoop/hadoop/logs
+    networks:
+      - hadoop
+
+  resourcemanager:
+    image: daemon
+    hostname: resourcemanager
+    command: ./start.sh yarn resourcemanager
+    ports:
+      - 8088:8088
+    volumes:
+      - ./resourcemanager/logs:/usr/local/hadoop/hadoop/logs
+    networks:
+      - hadoop
+
+  historyserver:
+    image: daemon
+    hostname: historyserver
+    command: ./start.sh mr-jobhistory historyserver
+    ports:
+      - 19888:19888
+    volumes:
+      - ./historyserver/logs:/usr/local/hadoop/hadoop/logs
+    networks:
+      - hadoop
+
+networks:
+  hadoop:
