@@ -3,7 +3,7 @@
 
 A docker microservice ecosystem for a baseline Hadoop 2.0 cluster.
 
-![](header.png)
+![](project.png)
 
 ## Pre-requisites
 
