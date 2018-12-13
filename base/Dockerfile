@@ -16,8 +16,8 @@ RUN ./hadoop_setup.sh ${HADOOP_VER} /usr/local/hadoop
 RUN ./java_setup.sh ${JAVA_VER} /usr/lib/jvm
 
 # Pull in the configuration file for hadoop and only make it executable
-COPY scripts/${BASE_OS}/configure.sh /tmp/configure.sh
-RUN chmod +x /tmp/configure.sh
+COPY scripts/${BASE_OS}/install_deps.sh /tmp/install_deps.sh
+RUN chmod +x /tmp/install_deps.sh
 
 # Run configuration
-RUN /tmp/configure.sh
+RUN /tmp/install_deps.sh

@@ -23,21 +23,36 @@ services:
     ports:
       - 50070:50070
     volumes:
-      - ./namenode/format.sh:/tmp/format.sh
-      - ./namenode/logs:/usr/local/hadoop/hadoop/logs
-      - ./namenode/data:/usr/local/hadoop/data/nn
+      - ./daemon/format.sh:/tmp/format.sh
+      - ./logs/namenode:/usr/local/hadoop/hadoop/logs
+      - ./data/namenode:/usr/local/hadoop/data/nn
     networks:
       - hadoop
 
-  datanode:
+  datanode1:
     image: daemon
-    hostname: datanode
+    hostname: datanode1
     command: ./start.sh hadoop datanode
     ports:
       - 50075:50075
+      - 8042:8042
     volumes:
-      - ./datanode/logs:/usr/local/hadoop/hadoop/logs
-      - ./datanode/data:/usr/local/hadoop/data/dn
+      - ./daemon/start.sh:/tmp/start.sh
+      - ./logs/datanode1:/usr/local/hadoop/hadoop/logs
+      - ./data/datanode1:/usr/local/hadoop/data/dn
+    networks:
+      - hadoop
+
+  datanode2:
+    image: daemon
+    hostname: datanode2
+    command: ./start.sh hadoop datanode yarn nodemanager
+    ports:
+      - 50076:50075
+      - 8043:8042
+    volumes:
+      - ./logs/datanode2:/usr/local/hadoop/hadoop/logs
+      - ./data/datanode2:/usr/local/hadoop/data/dn
     networks:
       - hadoop
 
@@ -48,19 +63,8 @@ services:
     ports:
       - 50090:50090
     volumes:
-      - ./secondarynamenode/logs:/usr/local/hadoop/hadoop/logs
-      - ./secondarynamenode/data:/usr/local/hadoop/data/snn
-    networks:
-      - hadoop
-
-  nodemanager:
-    image: daemon
-    hostname: nodemanager
-    command: ./start.sh yarn nodemanager
-    ports:
-      - 8042:8042
-    volumes:
-      - ./nodemanager/logs:/usr/local/hadoop/hadoop/logs
+      - ./logs/secondarynamenode:/usr/local/hadoop/hadoop/logs
+      - ./data/secondarynamenode:/usr/local/hadoop/data/snn
     networks:
       - hadoop
 
@@ -71,7 +75,7 @@ services:
     ports:
       - 8088:8088
     volumes:
-      - ./resourcemanager/logs:/usr/local/hadoop/hadoop/logs
+      - ./logs/resourcemanager:/usr/local/hadoop/hadoop/logs
     networks:
       - hadoop
 
@@ -82,7 +86,7 @@ services:
     ports:
       - 19888:19888
     volumes:
-      - ./historyserver/logs:/usr/local/hadoop/hadoop/logs
+      - ./logs/historyserver:/usr/local/hadoop/hadoop/logs
     networks:
       - hadoop
 
