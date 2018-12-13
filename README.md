@@ -16,7 +16,7 @@ Prepare cluster:
 ```sh
 > docker-compose run namenode ./format.sh
 ```
-*NOTE: this step should build the base and daemon images*
+*NOTE: this step should build the base and daemon images if you have not already*
 
 Start cluster:
 ```sh
@@ -90,5 +90,14 @@ While the cluster is running (`docker-compose up -d`), you can log into any one 
                                  Dload  Upload   Total   Spent    Left  Speed
 100 1246k  100 1246k    0     0  1846k      0 --:--:-- --:--:-- --:--:-- 1846k
 [root@namenode tmp] hdfs dfs -copyToLocal ./book.txt /in
+[root@namenode tmp] hdfs dfs -ls /in/
+```
+
+### Perform a MapReduce operation on the file
+```sh
+[root@namenode tmp] yarn jar /usr/local/hadoop/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-$HADOOP_VER.jar wordcount /in /out
+<MapReduce log output here>
+<Can use ResourceManager and/or HistoryServer to track (http://localhost:8088 or http://localhost:19888)>
+[root@namenode tmp] hdfs dfs -cat /out/part-r00000
 ```
 
