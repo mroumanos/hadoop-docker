@@ -7,8 +7,8 @@ A docker microservice ecosystem for a baseline Hadoop 2.0 cluster.
 
 ## Pre-requisites
 
-- docker
-- docker-compose
+- [docker](https://docs.docker.com/install/) (1.13.0+)
+- [docker-compose](https://docs.docker.com/compose/install/) (3+)
 
 ## Quickstart
 
