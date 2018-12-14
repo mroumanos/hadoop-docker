@@ -1,3 +1,5 @@
 logs/*
 data/*
+ipynb_checkpoints/*
+*.ipynb
 .git
