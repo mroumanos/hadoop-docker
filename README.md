@@ -125,8 +125,7 @@ Time taken: 2.233 seconds
 ```
 
 ### Access cluster through Jupyter
-![hive logo](https://mapr.com/products/product-overview/apache-hive/assets/apache-hive-bee-image.png)
-You can explore the network and services of the cluster using Jupyter
+You can explore the network and services of the cluster using [Jupyter](https://jupyter.org/)
 ```sh
 > docker-compose -f extras/docker-compose.yml up -d jupyter
 ```
