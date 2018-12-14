@@ -1,5 +1,5 @@
 # Hadoop Docker
-> a big data microservice cluster
+> a microservice cluster for learning about big data architecture
 
 A docker microservice ecosystem for a baseline Hadoop 2.0 cluster.
 
@@ -14,6 +14,7 @@ A docker microservice ecosystem for a baseline Hadoop 2.0 cluster.
 
 Prepare cluster:
 ```sh
+> docker network create -d bridge hadoop
 > docker-compose run namenode ./format.sh
 ```
 *NOTE: this step should build the base and daemon images if you have not already*
@@ -63,9 +64,10 @@ The folder structure closely follows the Docker image inheritance:
 ```
 |----base/: OS installation scripts for various versions of Hadoop and Java
 |----daemon/: site configuration files and startup scripts
-|---data/: data folders mounted to the data folders with NameNode, DataNodes, and SecondaryNameNodes containers (this allows data persistence in the cluster)
-|---logs/: log folders for all running containers
-|---docker-compose.yml: architecture file, where you can set service hostnames, ports, mounted folders, etc.
+|----data/: data folders mounted to the data folders with NameNode, DataNodes, and SecondaryNameNodes containers (this allows data persistence in the cluster)
+|----logs/: log folders for all running containers
+|----extras/: Hadoop subprojects that can be added to the cluster
+|----docker-compose.yml: architecture file, where you can set service hostnames, ports, mounted folders, etc.
 
 ```
 ## Endpoints
@@ -78,10 +80,18 @@ The folder structure closely follows the Docker image inheritance:
 - YARN Resource Manager: http://localhost:8088
 - HistoryServer: http://localhost:19888
 
+## Monitoring
+This container "stack" can be monitored using another Docker image [portainer](https://www.portainer.io):
+```sh
+> docker-compose -f extras/docker-compose.yml up -d portainer
+```
+Then, navigate to portainer (http://localhost:9000), create a login, and explore the options.
+
 ## Tests
 While the cluster is running (`docker-compose up -d`), you can log into any one of the containers to access the Hadoop API.
 
-### Ingest file
+### Ingest a file
+![hadoop logo](https://svn.apache.org/repos/asf/hadoop/common/site/main/author/src/documentation/resources/images/hdfs-logo.jpg)
 ```sh
 > docker-compose exec namenode /bin/bash
 [root@namenode tmp] hdfs dfs -mkdir /in # <-- you are now executing commands within the container
@@ -93,7 +103,7 @@ While the cluster is running (`docker-compose up -d`), you can log into any one 
 [root@namenode tmp] hdfs dfs -ls /in/
 ```
 
-### Perform a MapReduce operation on the file
+### Run a MapReduce job
 ```sh
 [root@namenode tmp] yarn jar /usr/local/hadoop/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-$HADOOP_VER.jar wordcount /in /out
 <MapReduce log output here>
@@ -101,3 +111,23 @@ While the cluster is running (`docker-compose up -d`), you can log into any one 
 [root@namenode tmp] hdfs dfs -cat /out/part-r00000
 ```
 
+### Access Hadoop through Hive
+![hive logo](https://mapr.com/products/product-overview/apache-hive/assets/apache-hive-bee-image.png)
+```sh
+> docker-compose -f extras/docker-compose.yml run hive ./format.sh # this instantiates metastore, must be done before using cli
+> docker-compose -f extras/docker-compose.yml run hive
+hive> CREATE TABLE posts(`user` STRING, post STRING, `time` STRING)
+    > ROW FORMAT DELIMITED
+    > FIELDS TERMINATED BY ','
+    > STORED AS TEXTFILE;
+OK
+Time taken: 2.233 seconds
+```
+
+### Access cluster through Jupyter
+![hive logo](https://mapr.com/products/product-overview/apache-hive/assets/apache-hive-bee-image.png)
+You can explore the network and services of the cluster using Jupyter
+```sh
+> docker-compose -f extras/docker-compose.yml up -d jupyter
+```
+and navigate to http://localhost:8888
