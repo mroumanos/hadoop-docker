@@ -9,7 +9,7 @@ services:
       args:
         BASE_OS: centos
         HADOOP_VER: 2.9.2
-        JAVA_VER: 7
+        JAVA_VER: 8
 
   daemon:
     image: daemon
@@ -26,8 +26,6 @@ services:
       - ./daemon/format.sh:/tmp/format.sh
       - ./logs/namenode:/usr/local/hadoop/hadoop/logs
       - ./data/namenode:/usr/local/hadoop/data/nn
-    networks:
-      - hadoop
 
   datanode1:
     image: daemon
@@ -40,8 +38,6 @@ services:
       - ./daemon/start.sh:/tmp/start.sh
       - ./logs/datanode1:/usr/local/hadoop/hadoop/logs
       - ./data/datanode1:/usr/local/hadoop/data/dn
-    networks:
-      - hadoop
 
   datanode2:
     image: daemon
@@ -53,8 +49,6 @@ services:
     volumes:
       - ./logs/datanode2:/usr/local/hadoop/hadoop/logs
       - ./data/datanode2:/usr/local/hadoop/data/dn
-    networks:
-      - hadoop
 
   secondarynamenode:
     image: daemon
@@ -65,8 +59,6 @@ services:
     volumes:
       - ./logs/secondarynamenode:/usr/local/hadoop/hadoop/logs
       - ./data/secondarynamenode:/usr/local/hadoop/data/snn
-    networks:
-      - hadoop
 
   resourcemanager:
     image: daemon
@@ -76,8 +68,6 @@ services:
       - 8088:8088
     volumes:
       - ./logs/resourcemanager:/usr/local/hadoop/hadoop/logs
-    networks:
-      - hadoop
 
   historyserver:
     image: daemon
@@ -87,8 +77,8 @@ services:
       - 19888:19888
     volumes:
       - ./logs/historyserver:/usr/local/hadoop/hadoop/logs
-    networks:
-      - hadoop
 
 networks:
-  hadoop:
+  default:
+    external:
+      name: hadoop
