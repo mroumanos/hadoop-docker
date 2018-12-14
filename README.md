@@ -91,7 +91,6 @@ Then, navigate to portainer (http://localhost:9000), create a login, and explore
 While the cluster is running (`docker-compose up -d`), you can log into any one of the containers to access the Hadoop API.
 
 ### Ingest a file
-![hadoop logo](https://svn.apache.org/repos/asf/hadoop/common/site/main/author/src/documentation/resources/images/hdfs-logo.jpg)
 ```sh
 > docker-compose exec namenode /bin/bash
 [root@namenode tmp] hdfs dfs -mkdir /in # <-- you are now executing commands within the container
@@ -105,14 +104,15 @@ While the cluster is running (`docker-compose up -d`), you can log into any one 
 
 ### Run a MapReduce job
 ```sh
+> docker-compose exec namenode /bin/bash
 [root@namenode tmp] yarn jar /usr/local/hadoop/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-$HADOOP_VER.jar wordcount /in /out
-<MapReduce log output here>
-<Can use ResourceManager and/or HistoryServer to track (http://localhost:8088 or http://localhost:19888)>
+...<MapReduce log output here>...
+...<Can use ResourceManager and/or HistoryServer to track (http://localhost:8088 or http://localhost:19888)>...
 [root@namenode tmp] hdfs dfs -cat /out/part-r00000
+...<MapReduce output file text here>...
 ```
 
 ### Access Hadoop through Hive
-![hive logo](https://mapr.com/products/product-overview/apache-hive/assets/apache-hive-bee-image.png)
 ```sh
 > docker-compose -f extras/docker-compose.yml run hive ./format.sh # this instantiates metastore, must be done before using cli
 > docker-compose -f extras/docker-compose.yml run hive
