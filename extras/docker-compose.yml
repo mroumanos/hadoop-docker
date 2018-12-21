@@ -3,7 +3,7 @@ version: '3'
 services:
   hive:
     image: hive
-    hostname: namenode
+    hostname: hive
     build:
       context: ./hive
       args:
@@ -31,6 +31,19 @@ services:
     environment:
       - JUPYTER_ENABLE_LAB=1
     command: start-notebook.sh --NotebookApp.notebook_dir=/notebooks
+  
+  sqoop:
+    image: sqoop
+    hostname: sqoop
+    build:
+      context: ./sqoop
+      args:
+        SQOOP_VER: 1.99.7
+    volumes:
+      - "./sqoop/format.sh:/tmp/format.sh"
+      - "./sqoop/start.sh:/tmp/start_sqoop.sh"
+      - "./sqoop/sqoop.properties:/usr/local/hadoop/sqoop/conf/sqoop.properties"
+    command: ./start_sqoop.sh
 
 networks:
   default:

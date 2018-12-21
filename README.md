@@ -1,7 +1,7 @@
 # Hadoop Docker
 > a microservice cluster for learning about big data architecture
 
-A docker microservice ecosystem for a baseline Hadoop 2.0 cluster.
+A docker microservice ecosystem for a baseline Hadoop 2.0 cluster. Created for course "Big Data Processing Using Hadoop" (EN.605.788) at Johns Hopkins University.
 
 ![](project.png)
 
@@ -124,9 +124,21 @@ OK
 Time taken: 2.233 seconds
 ```
 
+### Use Sqoop to transfer between RDBMS
+You can transfer data to/from an RDBMS like Postgres using Apache [Sqoop](https://sqoop.apache.org)
+```sh
+> docker-compose -f extras/docker-compose.yml up -d postgres # or use another RDBMS
+> docker-compose -f extras/docker-compose.yml run sqoop ./format.sh
+> docker-compose -f extras/docker-compose.yml run sqoop
+```
+and navigate to http://localhost:8888
+
 ### Access cluster through Jupyter
 You can explore the network and services of the cluster using [Jupyter](https://jupyter.org/)
 ```sh
 > docker-compose -f extras/docker-compose.yml up -d jupyter
 ```
 and navigate to http://localhost:8888
+
+## Contact
+Please contact Mike Roumanos ([@mroumanos](https://github.com/mroumanos)) with any questions, comments, or requests
