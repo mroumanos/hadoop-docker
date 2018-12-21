@@ -130,14 +130,15 @@ You can transfer data to/from an RDBMS like Postgres using Apache [Sqoop](https:
 > docker-compose -f extras/docker-compose.yml up -d postgres
 ```
 Or, connect to a pre-existing database (this may require you to install a new [connector](https://sqoop.apache.org/docs/1.99.7/user/Connectors.html))
+
+Then, to access the Sqoop shell, run:
 ```sh
-> docker-compose -f extras/docker-compose.yml run sqoop ./format.sh
+> docker-compose -f extras/docker-compose.yml run sqoop ./format.sh # required before starting the sqoop server
 > docker-compose -f extras/docker-compose.yml run sqoop
 Sqoop Shell: Type 'help' or '\h' for help.
 
 sqoop:000>
 ```
-and navigate to http://localhost:8888
 
 ### Access cluster through Jupyter
 You can explore the network and services of the cluster using [Jupyter](https://jupyter.org/)
