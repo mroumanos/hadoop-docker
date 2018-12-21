@@ -45,6 +45,16 @@ services:
       - "./sqoop/sqoop.properties:/usr/local/hadoop/sqoop/conf/sqoop.properties"
     command: ./start_sqoop.sh
 
+  postgres:
+    image: postgres
+    hostname: postgres
+    environment:
+      - POSTGRES_PASSWORD=sqoop
+      - POSTGRES_USER=sqoop
+      - POSTGRES_DB=sqoop
+    volumes:
+      - "./postgres/seed.sql:/docker-entrypoint-initdb.d/seed.sql"
+
 networks:
   default:
     external:
