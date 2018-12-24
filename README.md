@@ -15,7 +15,7 @@ A docker microservice ecosystem for a baseline Hadoop 2.0 cluster. Created for c
 Prepare cluster:
 ```sh
 > docker network create -d bridge hadoop
-> docker-compose run namenode ./format.sh
+> docker-compose run namenode format.sh
 ```
 *NOTE: this step should build the base and daemon images if you have not already*
 
@@ -98,7 +98,7 @@ While the cluster is running (`docker-compose up -d`), you can log into any one 
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100 1246k  100 1246k    0     0  1846k      0 --:--:-- --:--:-- --:--:-- 1846k
-[root@namenode tmp] hdfs dfs -copyToLocal ./book.txt /in
+[root@namenode tmp] hdfs dfs -copyFromLocal ./book.txt /in
 [root@namenode tmp] hdfs dfs -ls /in/
 ```
 
@@ -108,13 +108,13 @@ While the cluster is running (`docker-compose up -d`), you can log into any one 
 [root@namenode tmp] yarn jar /usr/local/hadoop/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-$HADOOP_VER.jar wordcount /in /out
 ...<MapReduce log output here>...
 ...<Can use ResourceManager and/or HistoryServer to track (http://localhost:8088 or http://localhost:19888)>...
-[root@namenode tmp] hdfs dfs -cat /out/part-r00000
+[root@namenode tmp] hdfs dfs -cat /out/part-r-00000
 ...<MapReduce output file text here>...
 ```
 
 ### Access Hadoop through Hive
 ```sh
-> docker-compose -f extras/docker-compose.yml run hive ./format.sh # this instantiates metastore, must be done before using cli
+> docker-compose -f extras/docker-compose.yml run hive format.sh # this instantiates metastore, must be done before using cli
 > docker-compose -f extras/docker-compose.yml run hive
 hive> CREATE TABLE posts(`user` STRING, post STRING, `time` STRING)
     > ROW FORMAT DELIMITED
