@@ -9,9 +9,12 @@ services:
       args:
         HIVE_VER: 3.1.1
     volumes:
-      - "./hive/format.sh:/tmp/format.sh"
-      - "./hive/start.sh:/tmp/start_hive.sh"
-    command: ./start_hive.sh
+      - "./hive/hive-site.xml:/usr/local/hadoop/hive/conf/hive-site.xml"
+      - "./hive/format.sh:/usr/local/bin/format.sh"
+      - "./hive/start.sh:/usr/local/bin/start.sh"
+      - "../data/hive:/usr/local/hadoop/hive/data"
+      - "../logs/hive:/usr/local/hadoop/hive/logs"
+    command: start.sh
     
   portainer:
     image: portainer/portainer
