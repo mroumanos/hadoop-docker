@@ -1,6 +1,7 @@
 version: '3'
 
 services:
+
   hive:
     image: hive
     hostname: hive
@@ -42,6 +43,7 @@ services:
       context: ./sqoop
       args:
         SQOOP_VER: 1.99.7
+        PG_DRIVER: 42.2.5
     volumes:
       - "./sqoop/format.sh:/tmp/format.sh"
       - "./sqoop/start.sh:/tmp/start_sqoop.sh"
@@ -49,7 +51,7 @@ services:
     command: ./start_sqoop.sh
 
   postgres:
-    image: postgres
+    image: postgres:9.4.20-alpine
     hostname: postgres
     environment:
       - POSTGRES_PASSWORD=sqoop
