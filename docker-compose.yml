@@ -25,7 +25,7 @@ services:
     volumes:
       - ./daemon/format.sh:/usr/local/bin/format.sh
       - ./logs/namenode:/usr/local/apache/hadoop/logs
-      - ./data/namenode:/usr/local/apache/data/nn
+      - ./data/namenode:/usr/local/apache/hadoop/data/nn
 
   datanode1:
     image: daemon
@@ -36,7 +36,7 @@ services:
       - 8042:8042
     volumes:
       - ./logs/datanode1:/usr/local/apache/hadoop/logs
-      - ./data/datanode1:/usr/local/apache/data/dn
+      - ./data/datanode1:/usr/local/apache/hadoop/data/dn
 
   datanode2:
     image: daemon
@@ -47,7 +47,7 @@ services:
       - 8043:8042
     volumes:
       - ./logs/datanode2:/usr/local/apache/hadoop/logs
-      - ./data/datanode2:/usr/local/apache/data/dn
+      - ./data/datanode2:/usr/local/apache/hadoop/data/dn
 
   secondarynamenode:
     image: daemon
@@ -57,7 +57,7 @@ services:
       - 50090:50090
     volumes:
       - ./logs/secondarynamenode:/usr/local/apache/hadoop/logs
-      - ./data/secondarynamenode:/usr/local/apache/data/snn
+      - ./data/secondarynamenode:/usr/local/apache/hadoop/data/snn
 
   resourcemanager:
     image: daemon
