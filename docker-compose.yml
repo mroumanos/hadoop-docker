@@ -19,64 +19,63 @@ services:
   namenode:
     image: daemon
     hostname: namenode
-    command: ./start.sh hadoop namenode
+    command: start.sh hadoop namenode
     ports:
       - 50070:50070
     volumes:
-      - ./daemon/format.sh:/tmp/format.sh
-      - ./logs/namenode:/usr/local/hadoop/hadoop/logs
-      - ./data/namenode:/usr/local/hadoop/data/nn
+      - ./daemon/format.sh:/usr/local/bin/format.sh
+      - ./logs/namenode:/usr/local/apache/hadoop/logs
+      - ./data/namenode:/usr/local/apache/data/nn
 
   datanode1:
     image: daemon
     hostname: datanode1
-    command: ./start.sh hadoop datanode
+    command: start.sh hadoop datanode
     ports:
       - 50075:50075
       - 8042:8042
     volumes:
-      - ./daemon/start.sh:/tmp/start.sh
-      - ./logs/datanode1:/usr/local/hadoop/hadoop/logs
-      - ./data/datanode1:/usr/local/hadoop/data/dn
+      - ./logs/datanode1:/usr/local/apache/hadoop/logs
+      - ./data/datanode1:/usr/local/apache/data/dn
 
   datanode2:
     image: daemon
     hostname: datanode2
-    command: ./start.sh hadoop datanode yarn nodemanager
+    command: start.sh hadoop datanode yarn nodemanager
     ports:
       - 50076:50075
       - 8043:8042
     volumes:
-      - ./logs/datanode2:/usr/local/hadoop/hadoop/logs
-      - ./data/datanode2:/usr/local/hadoop/data/dn
+      - ./logs/datanode2:/usr/local/apache/hadoop/logs
+      - ./data/datanode2:/usr/local/apache/data/dn
 
   secondarynamenode:
     image: daemon
     hostname: secondarynamenode
-    command: ./start.sh hadoop secondarynamenode
+    command: start.sh hadoop secondarynamenode
     ports:
       - 50090:50090
     volumes:
-      - ./logs/secondarynamenode:/usr/local/hadoop/hadoop/logs
-      - ./data/secondarynamenode:/usr/local/hadoop/data/snn
+      - ./logs/secondarynamenode:/usr/local/apache/hadoop/logs
+      - ./data/secondarynamenode:/usr/local/apache/data/snn
 
   resourcemanager:
     image: daemon
     hostname: resourcemanager
-    command: ./start.sh yarn resourcemanager
+    command: start.sh yarn resourcemanager
     ports:
       - 8088:8088
     volumes:
-      - ./logs/resourcemanager:/usr/local/hadoop/hadoop/logs
+      - ./logs/resourcemanager:/usr/local/apache/hadoop/logs
 
   historyserver:
     image: daemon
     hostname: historyserver
-    command: ./start.sh mr-jobhistory historyserver
+    command: start.sh mr-jobhistory historyserver
     ports:
       - 19888:19888
     volumes:
-      - ./logs/historyserver:/usr/local/hadoop/hadoop/logs
+      - ./logs/historyserver:/usr/local/apache/hadoop/logs
 
 networks:
   default:

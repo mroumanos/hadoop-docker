@@ -1,6 +1,7 @@
 version: '3'
 
 services:
+
   hive:
     image: hive
     hostname: hive
@@ -9,9 +10,12 @@ services:
       args:
         HIVE_VER: 3.1.1
     volumes:
-      - "./hive/format.sh:/tmp/format.sh"
-      - "./hive/start.sh:/tmp/start_hive.sh"
-    command: ./start_hive.sh
+      - "./hive/hive-site.xml:/usr/local/hadoop/hive/conf/hive-site.xml"
+      - "./hive/format.sh:/usr/local/bin/format.sh"
+      - "./hive/start.sh:/usr/local/bin/start.sh"
+      - "../data/hive:/usr/local/hadoop/hive/data"
+      - "../logs/hive:/usr/local/hadoop/hive/logs"
+    command: start.sh
     
   portainer:
     image: portainer/portainer
@@ -39,11 +43,22 @@ services:
       context: ./sqoop
       args:
         SQOOP_VER: 1.99.7
+        PG_DRIVER: 42.2.5
     volumes:
       - "./sqoop/format.sh:/tmp/format.sh"
       - "./sqoop/start.sh:/tmp/start_sqoop.sh"
       - "./sqoop/sqoop.properties:/usr/local/hadoop/sqoop/conf/sqoop.properties"
     command: ./start_sqoop.sh
+
+  postgres:
+    image: postgres:9.4.20-alpine
+    hostname: postgres
+    environment:
+      - POSTGRES_PASSWORD=sqoop
+      - POSTGRES_USER=sqoop
+      - POSTGRES_DB=sqoop
+    volumes:
+      - "./postgres/seed.sql:/docker-entrypoint-initdb.d/seed.sql"
 
 networks:
   default:

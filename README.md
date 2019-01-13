@@ -1,7 +1,7 @@
 # Hadoop Docker
 > a microservice cluster for learning about big data architecture
 
-A docker microservice ecosystem for a baseline Hadoop 2.0 cluster. Created for course "Big Data Processing Using Hadoop" (EN.605.788) at Johns Hopkins University.
+A docker microservice ecosystem for a baseline Hadoop 2.0 cluster.
 
 ![](project.png)
 
@@ -15,7 +15,7 @@ A docker microservice ecosystem for a baseline Hadoop 2.0 cluster. Created for c
 Prepare cluster:
 ```sh
 > docker network create -d bridge hadoop
-> docker-compose run namenode ./format.sh
+> docker-compose run namenode format.sh
 ```
 *NOTE: this step should build the base and daemon images if you have not already*
 
@@ -98,7 +98,7 @@ While the cluster is running (`docker-compose up -d`), you can log into any one 
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100 1246k  100 1246k    0     0  1846k      0 --:--:-- --:--:-- --:--:-- 1846k
-[root@namenode tmp] hdfs dfs -copyToLocal ./book.txt /in
+[root@namenode tmp] hdfs dfs -copyFromLocal ./book.txt /in
 [root@namenode tmp] hdfs dfs -ls /in/
 ```
 
@@ -108,13 +108,13 @@ While the cluster is running (`docker-compose up -d`), you can log into any one 
 [root@namenode tmp] yarn jar /usr/local/hadoop/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-$HADOOP_VER.jar wordcount /in /out
 ...<MapReduce log output here>...
 ...<Can use ResourceManager and/or HistoryServer to track (http://localhost:8088 or http://localhost:19888)>...
-[root@namenode tmp] hdfs dfs -cat /out/part-r00000
+[root@namenode tmp] hdfs dfs -cat /out/part-r-00000
 ...<MapReduce output file text here>...
 ```
 
 ### Access Hadoop through Hive
 ```sh
-> docker-compose -f extras/docker-compose.yml run hive ./format.sh # this instantiates metastore, must be done before using cli
+> docker-compose -f extras/docker-compose.yml run hive format.sh # this instantiates metastore, must be done before using cli
 > docker-compose -f extras/docker-compose.yml run hive
 hive> CREATE TABLE posts(`user` STRING, post STRING, `time` STRING)
     > ROW FORMAT DELIMITED
@@ -125,13 +125,20 @@ Time taken: 2.233 seconds
 ```
 
 ### Use Sqoop to transfer between RDBMS
-You can transfer data to/from an RDBMS like Postgres using Apache [Sqoop](https://sqoop.apache.org)
+You can transfer data to/from an RDBMS like Postgres using Apache [Sqoop](https://sqoop.apache.org). To setup a Postgresql database, place all SQL commands to initialize the database in `extras/postgres/seed.sql` and start the database with: 
 ```sh
-> docker-compose -f extras/docker-compose.yml up -d postgres # or use another RDBMS
-> docker-compose -f extras/docker-compose.yml run sqoop ./format.sh
-> docker-compose -f extras/docker-compose.yml run sqoop
+> docker-compose -f extras/docker-compose.yml up -d postgres
 ```
-and navigate to http://localhost:8888
+Or, connect to a pre-existing database (this may require you to install a new [connector](https://sqoop.apache.org/docs/1.99.7/user/Connectors.html))
+
+Then, to access the Sqoop shell, run:
+```sh
+> docker-compose -f extras/docker-compose.yml run sqoop ./format.sh # required before starting the sqoop server
+> docker-compose -f extras/docker-compose.yml run sqoop
+Sqoop Shell: Type 'help' or '\h' for help.
+
+sqoop:000>
+```
 
 ### Access cluster through Jupyter
 You can explore the network and services of the cluster using [Jupyter](https://jupyter.org/)
