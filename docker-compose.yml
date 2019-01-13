@@ -24,8 +24,8 @@ services:
       - 50070:50070
     volumes:
       - ./daemon/format.sh:/usr/local/bin/format.sh
-      - ./logs/namenode:/usr/local/hadoop/hadoop/logs
-      - ./data/namenode:/usr/local/hadoop/data/nn
+      - ./logs/namenode:/usr/local/apache/hadoop/logs
+      - ./data/namenode:/usr/local/apache/data/nn
 
   datanode1:
     image: daemon
@@ -35,8 +35,8 @@ services:
       - 50075:50075
       - 8042:8042
     volumes:
-      - ./logs/datanode1:/usr/local/hadoop/hadoop/logs
-      - ./data/datanode1:/usr/local/hadoop/data/dn
+      - ./logs/datanode1:/usr/local/apache/hadoop/logs
+      - ./data/datanode1:/usr/local/apache/data/dn
 
   datanode2:
     image: daemon
@@ -46,8 +46,8 @@ services:
       - 50076:50075
       - 8043:8042
     volumes:
-      - ./logs/datanode2:/usr/local/hadoop/hadoop/logs
-      - ./data/datanode2:/usr/local/hadoop/data/dn
+      - ./logs/datanode2:/usr/local/apache/hadoop/logs
+      - ./data/datanode2:/usr/local/apache/data/dn
 
   secondarynamenode:
     image: daemon
@@ -56,8 +56,8 @@ services:
     ports:
       - 50090:50090
     volumes:
-      - ./logs/secondarynamenode:/usr/local/hadoop/hadoop/logs
-      - ./data/secondarynamenode:/usr/local/hadoop/data/snn
+      - ./logs/secondarynamenode:/usr/local/apache/hadoop/logs
+      - ./data/secondarynamenode:/usr/local/apache/data/snn
 
   resourcemanager:
     image: daemon
@@ -66,7 +66,7 @@ services:
     ports:
       - 8088:8088
     volumes:
-      - ./logs/resourcemanager:/usr/local/hadoop/hadoop/logs
+      - ./logs/resourcemanager:/usr/local/apache/hadoop/logs
 
   historyserver:
     image: daemon
@@ -75,7 +75,7 @@ services:
     ports:
       - 19888:19888
     volumes:
-      - ./logs/historyserver:/usr/local/hadoop/hadoop/logs
+      - ./logs/historyserver:/usr/local/apache/hadoop/logs
 
 networks:
   default:
