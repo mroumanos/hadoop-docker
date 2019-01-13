@@ -1,7 +1,7 @@
 # Hadoop Docker
 > a microservice cluster for learning about big data architecture
 
-A docker microservice ecosystem for a baseline Hadoop 2.0 cluster. Created for course "Big Data Processing Using Hadoop" (EN.605.788) at Johns Hopkins University.
+A docker microservice ecosystem for a baseline Hadoop 2.0 cluster.
 
 ![](project.png)
 

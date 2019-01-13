@@ -2,6 +2,7 @@
 
 JAVA_VER=$1
 DEST=$2
+USER=$3
 
 case $JAVA_VER in
 7*)
@@ -16,14 +17,15 @@ case $JAVA_VER in
 esac
 
 echo "========== DOWNLOADING JAVA (Java $JAVA_VER)=========="
-curl -o java.tar.gz $JAVA_URL
+curl -o /tmp/java.tar.gz $JAVA_URL
 
 echo "========== UNPACKING JAVA (Java $JAVA_VER)=========="
 mkdir -p $DEST/java-$JAVA_VER
-tar -zxvf java.tar.gz -C $DEST/java-$JAVA_VER --strip-components 1
+tar -zxvf /tmp/java.tar.gz -C $DEST/java-$JAVA_VER --strip-components 1
 ln -s $DEST/java-$JAVA_VER $DEST/java
-rm java.tar.gz
+rm /tmp/java.tar.gz
+chown -R $USER:$USER $DEST
 
 echo "========== ADDING JAVA TO ENVIRONMENT (Java $JAVA_VER)=========="
-echo "export JAVA_HOME=$DEST/java" >> ~/.bashrc
+echo "export JAVA_HOME=$DEST/java" >> /home/$USER/.bashrc
 

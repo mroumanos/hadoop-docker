@@ -17,8 +17,16 @@
 <!-- Put site-specific property overrides in this file. -->
 
 <configuration>
-    <property>
-        <name>fs.default.name</name>
-        <value>hdfs://namenode:9000</value>
-    </property>
+  <property>
+    <name>fs.default.name</name>
+    <value>hdfs://namenode:9000</value>
+  </property>
+  <property>
+    <name>hadoop.proxyuser.sqoop2.hosts</name>
+    <value>*</value>
+  </property>
+  <property>
+    <name>hadoop.proxyuser.sqoop2.groups</name>
+    <value>*</value>
+  </property>
 </configuration>
