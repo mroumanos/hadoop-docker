@@ -14,10 +14,8 @@ ln -s $DEST/apache-sqoop-$SQOOP_VER $DEST/sqoop
 rm apache-sqoop.tar.gz
 
 echo "========== INSTALLING POSTGRES DRIVER ($PG_DRIVER) =========="
-mkdir -p /var/lib/sqoop2
-curl -L 'https://jdbc.postgresql.org/download/postgresql-$PG_DRIVER.jar' -o postgresql-$PG_DRIVER.jdbc4.jar
-cp postgresql-$PG_DRIVER.jdbc4.jar /var/lib/sqoop2/
-chmod 755 -R /var/lib/sqoop2
+curl -L 'https://jdbc.postgresql.org/download/postgresql-$PG_DRIVER.jar' -o $DEST/apache-sqoop-$SQOOP_VER $DEST/sqoop/server/lib/postgresql-$PG_DRIVER.jdbc4.jar
+chmod 555 $DEST/apache-sqoop-$SQOOP_VER $DEST/sqoop/server/lib/postgresql-$PG_DRIVER.jdbc4.jar
 
 echo "========== ADDING SQOOP TO ENVIRONMENT ($SQOOP_VER)=========="
 source ~/.bashrc

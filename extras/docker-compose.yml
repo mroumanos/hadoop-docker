@@ -42,7 +42,7 @@ services:
     build:
       context: ./sqoop
       args:
-        SQOOP_VER: 1.99.7
+        SQOOP_VER: 1.99.5
         PG_DRIVER: 42.2.5
     volumes:
       - "./sqoop/format.sh:/tmp/format.sh"
