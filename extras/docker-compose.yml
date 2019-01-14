@@ -10,22 +10,13 @@ services:
       args:
         HIVE_VER: 3.1.1
     volumes:
-      - "./hive/hive-site.xml:/usr/local/hadoop/hive/conf/hive-site.xml"
+      - "./hive/hive-site.xml:/usr/local/apache/hive/conf/hive-site.xml"
       - "./hive/format.sh:/usr/local/bin/format.sh"
       - "./hive/start.sh:/usr/local/bin/start.sh"
-      - "../data/hive:/usr/local/hadoop/hive/data"
-      - "../logs/hive:/usr/local/hadoop/hive/logs"
+      - "../data/hive:/usr/local/apache/hive/data"
+      - "../logs/hive:/usr/local/apache/hive/logs"
     command: start.sh
     
-  portainer:
-    image: portainer/portainer
-    ports:
-      - "9000:9000"
-    command: -H unix:///var/run/docker.sock
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - portainer_data:/data
-  
   lab:
     image: jupyter/base-notebook
     volumes:
@@ -47,7 +38,7 @@ services:
     volumes:
       - "./sqoop/format.sh:/tmp/format.sh"
       - "./sqoop/start.sh:/tmp/start_sqoop.sh"
-      - "./sqoop/sqoop.properties:/usr/local/hadoop/sqoop/conf/sqoop.properties"
+      - "./sqoop/sqoop.properties:/usr/local/apache/sqoop/conf/sqoop.properties"
     command: ./start_sqoop.sh
 
   postgres:

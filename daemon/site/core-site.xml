@@ -22,11 +22,19 @@
     <value>hdfs://namenode:9000</value>
   </property>
   <property>
+    <name>hadoop.tmp.dir</name>
+    <value>/tmp/hadoop-$(user.name)</value>
+  </property>
+  <property>
     <name>hadoop.proxyuser.sqoop2.hosts</name>
     <value>*</value>
   </property>
   <property>
     <name>hadoop.proxyuser.sqoop2.groups</name>
     <value>*</value>
+  </property>
+  <property>
+    <name>hadoop.user.group.static.mapping.overrides</name>
+    <value>hive=hadoop;sqoop2=hadoop</value> 
   </property>
 </configuration>

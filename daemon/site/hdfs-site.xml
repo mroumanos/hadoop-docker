@@ -19,22 +19,34 @@
 <configuration>
     <property>
         <name>dfs.replication</name>
-        <value>1</value>
+        <value>3</value>
     </property>
     <property>
         <name>dfs.namenode.name.dir</name>
         <value>file:/usr/local/apache/hadoop/data/nn</value>
     </property>
     <property>
-        <name>fs.checkpoint.dir</name>
+        <name>dfs.namenode.checkpoint.dir</name>
         <value>file:/usr/local/apache/hadoop/data/snn</value>
     </property>
     <property>
-        <name>fs.checkpoint.edits.dir</name>
+        <name>dfs.namenode.checkpoint.edits.dir</name>
         <value>file:/usr/local/apache/hadoop/data/snn</value>
     </property> 
     <property>
         <name>dfs.datanode.data.dir</name>
         <value>file:/usr/local/apache/hadoop/data/dn</value> 
+    </property>
+    <property>
+        <name>dfs.permissions.enabled</name>
+        <value>true</value> 
+    </property>
+    <property>
+        <name>dfs.permissions.superusergroup</name>
+        <value>hadoop</value> 
+    </property>
+    <property>
+        <name>dfs.namenode.acls.enabled</name>
+        <value>true</value>
     </property>
 </configuration>

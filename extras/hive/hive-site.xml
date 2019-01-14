@@ -18,22 +18,22 @@
 <configuration>
   <property>
     <name>hive.exec.scratchdir</name>
-    <value>/usr/local/hadoop/hive/data/scratch</value>
+    <value>/usr/local/apache/hive/data/scratch</value>
     <description>This directory is used for temporary files when Hive runs in local mode.</description>
   </property>
   <property>
     <name>hive.exec.local.scratchdir</name>
-    <value>/usr/local/hadoop/hive/data/scratch</value>
+    <value>/usr/local/apache/hive/data/scratch</value>
     <description>Scratch space for Hive jobs. This directory is used by Hive to store the plans for different map/reduce stages for the query as well as to stored the intermediate outputs of these stages.</description>
   </property>
   <property>
     <name>javax.jdo.option.ConnectionURL</name>
-    <value>jdbc:derby:;databaseName=/usr/local/hadoop/hive/data/metastore_db;create=true</value>
+    <value>jdbc:derby:;databaseName=/usr/local/apache/hive/data/metastore_db;create=true</value>
     <description>JDBC connect string for a JDBC metastore.</description>
   </property>
   <property>
     <name>hive.server2.logging.operation.log.location</name>
-    <value>/usr/local/hadoop/hive/logs</value>
+    <value>/usr/local/apache/hive/logs</value>
     <description>Top level directory where operation logs are stored if logging functionality is enabled.</description>
   </property> 
 </configuration>
